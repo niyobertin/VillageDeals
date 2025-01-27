@@ -1,0 +1,26 @@
+openapi: 3.0.0
+info:
+  title: VillageDeals API
+  description: API for managing local business transactions
+  version: 1.0.0
+servers:
+  - url: http://localhost:4200
+    description: Local development server
+  - url: https://api.villagedeals.com
+    description: Production server  
+paths:
+  /health-check:
+    get:
+      summary: Get a welcoming message
+      description: Returns a welcoming message to the user.
+      responses:
+        '200':
+          description: A welcoming message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Welcome to VillageDeals!"
