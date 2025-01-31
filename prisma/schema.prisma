@@ -12,23 +12,58 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-
 model User {
-  id           String   @id @default(uuid())
+  id           String     @id @default(uuid())
   firstName    String
   secondName   String
-  profileImage String?  // optional
-  email        String?  // Optional
+  profileImage String?    
+  email        String?    
   gender       String
   dob          DateTime
   phoneNumber  String
-  role         String       @default ("USER")
+  role         String     @default("USER")
   password     String
   companyId    String
   isActive     Boolean
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
   lastLogin    DateTime?
 
+  products     Product[]  @relation("UserProducts") 
+
   @@map("users")
+}
+
+model Product {
+  id           String        @id @default(uuid())
+  name         String
+  description  String?
+  categoryId   String
+  price        Float
+  discount     Float?
+  inStock      Int
+  sold         Int
+  status       Boolean
+  userId       String
+  companyId    String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  user         User          @relation("UserProducts", fields: [userId], references: [id])
+  category     ProductCategory @relation(fields: [categoryId], references: [id]) 
+
+  @@map("products")
+  ProductCategory ProductCategory[] @relation("ProductCategoryProducts")
+}
+
+model ProductCategory {
+  id          String    @id @default(uuid())
+  name        String    @unique
+  description String?
+  createdAt   DateTime  @default(now())
+
+  products    Product[] @relation("ProductCategoryProducts") 
+
+  @@map("products_categories")
+  Product Product[]
 }

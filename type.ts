@@ -21,3 +21,29 @@ export interface ILogin {
   phoneNumber?: string;
   password: string;
 }
+
+export interface IProductCategory {
+  id: string;
+  name: string;
+  description?: string;
+  createdAt: Date;
+  products: IProduct[];
+}
+
+export interface IProduct {
+  id: string;
+  name: string;
+  description?: string;
+  categoryId: string;
+  price: number;
+  discount?: number;
+  inStock: number;
+  sold: number;
+  status: boolean;
+  userId: string;
+  companyId: string;
+  createdAt: Date;
+  updatedAt: Date;
+  user: IUser;
+  category: IProductCategory;
+}
