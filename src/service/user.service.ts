@@ -1,6 +1,6 @@
 import { prisma } from "../utils/prisma.services";
-import { IUser } from "../../type";
-import { hashPassword } from "../utils/hashPassword";
+import { IUser, ILogin } from "../../type";
+import { isPasswordMatch, hashPassword } from "../utils/hashPassword";
 
 export const createUSer = async (data: IUser) => {
   const existingUser = await prisma.user.findFirst({
@@ -82,5 +82,27 @@ export const deleteUser = async (id: string): Promise<boolean> => {
     return true;
   } catch (error) {
     throw new Error(`Failed to delete user with ID ${id}`);
+  }
+};
+
+export const login = async (data: ILogin) => {
+  try {
+    const user = await prisma.user.findFirst({
+      where: {
+        OR: [{ email: data.email }, { phoneNumber: data.phoneNumber }],
+      },
+    });
+    if (!user) {
+      return null;
+    } else {
+      const isMatch = await isPasswordMatch(data.password, user?.password);
+      if (isMatch) {
+        return user;
+      } else {
+        return false;
+      }
+    }
+  } catch (error) {
+    throw new Error("Error occured during login");
   }
 };

@@ -76,3 +76,18 @@ export const updateUserSechama = Joi.object({
     "string.pattern.base": "Phone number must be exactly 10 digits.",
   }),
 });
+export const loginSchema = Joi.object({
+  password: Joi.string().required().messages({
+    "any.required": "Password is required",
+  }),
+  email: Joi.string().email().messages({
+    "string.email": "Invalid email format",
+  }),
+  phoneNumber: Joi.string().pattern(phoneNumberPattern).messages({
+    "string.pattern.base": "Invalid phone number",
+  }),
+})
+  .or("email", "phoneNumber")
+  .messages({
+    "object.missing": "Either email or phone number is required",
+  });
