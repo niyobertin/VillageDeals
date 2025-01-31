@@ -269,3 +269,65 @@ paths:
                   message:
                     type: string
                     example: "Internal Server Error"
+    patch:
+      summary: Update a user by ID
+      description: Updates a user's details.
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The unique ID of the user to update.
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                secondName:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                profileImage:
+                  type: string
+                  format: uri
+                phoneNumber:
+                  type: string
+                role:
+                  type: string
+                  enum: ["USER", "MANAGER", "ADMIN", "SELLER"]
+                isActive:
+                  type: boolean
+      responses:
+        "200":
+          description: User successfully updated
+        "400":
+          description: Invalid request data
+        "404":
+          description: User not found
+    delete:
+      summary: Delete a user by ID
+      description: Removes a user from the system.
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The unique ID of the user to delete.
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: User successfully deleted
+        "404":
+          description: User not found

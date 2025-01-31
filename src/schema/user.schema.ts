@@ -50,3 +50,29 @@ export const userRegisterSchema = Joi.object({
     "date.iso": "Last login must be in ISO format (YYYY-MM-DDTHH:mm:ssZ).",
   }),
 });
+
+export const updateUserSechama = Joi.object({
+  firstName: Joi.string().optional().min(3),
+  secondName: Joi.string().optional().min(3).messages({
+    "string.min": "Second name must be at least 3 characters long.",
+  }),
+  profileImage: Joi.string().optional().uri().messages({
+    "string.uri": "Profile image must be a valid URL.",
+  }),
+  email: Joi.string().email().optional().messages({
+    "string.email": "Email must be a valid email address.",
+  }),
+  gender: Joi.string()
+    .valid("Male", "Female", "Other", "Prefer not to say")
+    .optional()
+    .messages({
+      "any.only":
+        "Gender must be one of 'Male', 'Female', 'Other', or 'Prefer not to say'.",
+    }),
+  dob: Joi.date().optional().messages({
+    "date.iso": "Date of birth must be in ISO format (YYYY-MM-DD).",
+  }),
+  phoneNumber: Joi.string().pattern(phoneNumberPattern).optional().messages({
+    "string.pattern.base": "Phone number must be exactly 10 digits.",
+  }),
+});

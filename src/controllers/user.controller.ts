@@ -1,8 +1,10 @@
 import { Request, Response } from "express";
 import {
   createUSer,
+  deleteUser,
   retrieveUser,
   retrieveUsers,
+  updateUser,
 } from "../service/user.service";
 import { IUser } from "../../type";
 
@@ -57,6 +59,60 @@ export const getSingleUser = async (req: Request, res: Response) => {
       res.status(200).json({
         message: "User retrieved successfully!",
         data: response,
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+};
+
+export const updateUserDetails = async (req: Request, res: Response) => {
+  const userId = req.params.id;
+  const userData: IUser = req.body;
+  try {
+    const user = await retrieveUser(userId);
+    if (!user) {
+      res.status(404).json({
+        status: 404,
+        message: "User Not Found",
+      });
+    } else {
+      const response = await updateUser(user.id, userData);
+      if (response) {
+        res.status(200).json({
+          message: "User details updated sucessfully 😀!",
+          data: response,
+        });
+      } else {
+        res.status(400).json({
+          message: "Failed to update user details!",
+        });
+      }
+    }
+  } catch (error) {
+    res.status(500).json({
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+};
+
+export const removeUser = async (req: Request, res: Response) => {
+  const userId = req.params.id;
+  try {
+    const response = await retrieveUser(userId);
+    if (!response) {
+      res.status(404).json({
+        status: 404,
+        message: "User Not Found",
+      });
+    } else {
+      await deleteUser(userId);
+      res.status(200).json({
+        message: "User deleted successfully!",
       });
     }
   } catch (error) {
