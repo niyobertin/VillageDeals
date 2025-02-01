@@ -413,6 +413,242 @@ paths:
                   error:
                     type: string
                     example: "Something went wrong. Please try again later."
+  /api/v1/products/categories:
+    post:
+      summary: Add a new product category
+      description: Create a new product category in the database.
+      tags:
+        - Products - Categories
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the product category.
+                  example: Electronics
+                description:
+                  type: string
+                  description: A description of the product category.
+                  example: All electronic gadgets and devices.
+      responses:
+        "201":
+          description: Category created successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: New Category added😀!
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: 12345
+                      name:
+                        type: string
+                        example: Electronics
+                      description:
+                        type: string
+                        example: All electronic gadgets and devices.
+        "400":
+          description: Category already exists.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Category already exists
+        "500":
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Internal server error
+                  error:
+                    type: string
+                    example: Error message details
+    get:
+      summary: Get all product categories
+      description: Retrieve a list of all product categories from the database.
+      tags:
+        - Products - Categories
+      responses:
+        "200":
+          description: A list of product categories.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 12345
+                        name:
+                          type: string
+                          example: Electronics
+                        description:
+                          type: string
+                          example: All electronic gadgets and devices.
+        "500":
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Internal server error
+                  error:
+                    type: string
+                    example: Error message details
+  /api/v1/products/categories/{id}:
+    patch:
+      summary: Update a product category
+      description: Update an existing product category by its ID.
+      tags:
+        - Products - Categories
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The ID of the product category to update.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The updated name of the product category.
+                  example: Updated Electronics
+                description:
+                  type: string
+                  description: The updated description of the product category.
+                  example: Updated description for electronics.
+      responses:
+        "200":
+          description: Category updated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Category updated successfully!
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: 12345
+                      name:
+                        type: string
+                        example: Updated Electronics
+                      description:
+                        type: string
+                        example: Updated description for electronics.
+        "404":
+          description: Category not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Category not found
+        "500":
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Internal server error
+                  error:
+                    type: string
+                    example: Error message details
+    delete:
+      summary: Delete a product category
+      description: Delete an existing product category by its ID.
+      tags:
+        - Products - Categories
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The ID of the product category to delete.
+      responses:
+        "200":
+          description: Category deleted successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Category deleted successfully!
+        "404":
+          description: Category not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Category not found
+        "500":
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Internal server error
+                  error:
+                    type: string
+                    example: Error message details
 
 components:
   securitySchemes:

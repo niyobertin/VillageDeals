@@ -27,7 +27,7 @@ export interface IProductCategory {
   name: string;
   description?: string;
   createdAt: Date;
-  products: IProduct[];
+  products?: IProduct[];
 }
 
 export interface IProduct {
@@ -44,6 +44,6 @@ export interface IProduct {
   companyId: string;
   createdAt: Date;
   updatedAt: Date;
-  user: IUser;
-  category: IProductCategory;
+  user?: IUser;
+  category?: IProductCategory;
 }
