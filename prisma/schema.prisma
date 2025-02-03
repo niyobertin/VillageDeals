@@ -37,6 +37,7 @@ model User {
 model Product {
   id           String        @id @default(uuid())
   name         String
+  image        String?
   description  String?
   categoryId   String
   price        Float
@@ -45,7 +46,6 @@ model Product {
   sold         Int
   status       Boolean
   userId       String
-  companyId    String
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
 

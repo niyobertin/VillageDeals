@@ -33,6 +33,7 @@ export interface IProductCategory {
 export interface IProduct {
   id: string;
   name: string;
+  image?: string;
   description?: string;
   categoryId: string;
   price: number;
@@ -41,7 +42,6 @@ export interface IProduct {
   sold: number;
   status: boolean;
   userId: string;
-  companyId: string;
   createdAt: Date;
   updatedAt: Date;
   user?: IUser;
