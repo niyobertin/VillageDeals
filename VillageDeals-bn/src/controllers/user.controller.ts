@@ -16,7 +16,7 @@ export const userRegister = async (req: Request, res: Response) => {
     const response = await createUSer(userData);
 
     res.status(201).json({
-      message: "Account created successfull !",
+      message: "Account created successfully !",
       data: response,
     });
   } catch (error) {
@@ -85,7 +85,7 @@ export const updateUserDetails = async (req: Request, res: Response) => {
       const response = await updateUser(user.id, userData);
       if (response) {
         res.status(200).json({
-          message: "User details updated sucessfully 😀!",
+          message: "User details updated successfully 😀!",
           data: response,
         });
       } else {

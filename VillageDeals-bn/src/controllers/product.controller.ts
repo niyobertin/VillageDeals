@@ -12,6 +12,7 @@ import { uploadImage } from "../utils/cloudinary";
 export const addNewProduct = async (req: Request, res: Response) => {
   const newProduct: IProduct = req.body;
   const productsImage = req.file;
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
   const { id } = req.user;
 
@@ -64,7 +65,7 @@ export const getProduct = async (req: Request, res: Response) => {
       });
     } else {
       res.status(200).json({
-        message: "Product featched successfully",
+        message: "Product fetched successfully",
         data: product,
       });
     }
@@ -128,7 +129,7 @@ export const removeProduct = async (req: Request, res: Response) => {
     } else {
       await deleteProduct(product.id);
       res.status(200).json({
-        message: "Product removed sucessfully!",
+        message: "Product removed successfully!",
       });
     }
   } catch (error) {
