@@ -165,7 +165,7 @@ paths:
                           example: "a1b2c3d4-e5f6-7890-ab12-34567890cdef"
                         isActive:
                           type: boolean
-                          example: true
+                          example: false
         "500":
           description: Internal Server Error
           content:
@@ -893,6 +893,239 @@ paths:
           description: Unauthorized
         "404":
           description: Product not found
+        "500":
+          description: Internal server error
+  /api/v1/shops:
+    post:
+      summary: Create a new shop
+      tags:
+        - Shops
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - phone
+                - isActive
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                  nullable: true
+                avatar:
+                  type: string
+                  nullable: true
+                email:
+                  type: string
+                  format: email
+                  nullable: true
+                phone:
+                  type: string
+                address:
+                  type: string
+                  nullable: true
+                isActive:
+                  type: boolean
+                  example: false
+      responses:
+        "201":
+          description: Shop successfully created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "New shop created"
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      description:
+                        type: string
+                        nullable: true
+                      avatar:
+                        type: string
+                        nullable: true
+                      email:
+                        type: string
+                        format: email
+                        nullable: true
+                      phone:
+                        type: string
+                      address:
+                        type: string
+                        nullable: true
+                      isActive:
+                        type: boolean
+                        example: false
+        "400":
+          description: Bad request
+        "500":
+          description: Internal server error
+
+    get:
+      summary: Get all shops
+      tags:
+        - Shops
+      responses:
+        "200":
+          description: List of all shops
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Shops retrieved successfully"
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                        description:
+                          type: string
+                          nullable: true
+                        avatar:
+                          type: string
+                          nullable: true
+                        email:
+                          type: string
+                          format: email
+                          nullable: true
+                        phone:
+                          type: string
+                        address:
+                          type: string
+                          nullable: true
+                        isActive:
+                          type: boolean
+        "500":
+          description: Internal server error
+
+  /api/v1/shops/{id}:
+    get:
+      summary: Get shop by ID
+      tags:
+        - Shops
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Shop details retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  description:
+                    type: string
+                    nullable: true
+                  avatar:
+                    type: string
+                    nullable: true
+                  email:
+                    type: string
+                    format: email
+                    nullable: true
+                  phone:
+                    type: string
+                  address:
+                    type: string
+                    nullable: true
+                  isActive:
+                    type: boolean
+        "404":
+          description: Shop not found
+        "500":
+          description: Internal server error
+
+    patch:
+      summary: Update shop details
+      tags:
+        - Shops
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                  nullable: true
+                avatar:
+                  type: string
+                  nullable: true
+                email:
+                  type: string
+                  format: email
+                  nullable: true
+                phone:
+                  type: string
+                address:
+                  type: string
+                  nullable: true
+                isActive:
+                  type: boolean
+      responses:
+        "200":
+          description: Shop updated successfully
+        "400":
+          description: Bad request
+        "404":
+          description: Shop not found
+        "500":
+          description: Internal server error
+
+    delete:
+      summary: Delete shop
+      tags:
+        - Shops
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Shop deleted successfully
+        "404":
+          description: Shop not found
         "500":
           description: Internal server error
 

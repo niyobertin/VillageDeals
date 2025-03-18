@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express";
 import userRoutes from "./user.routes";
 import productRoutes from "./products.routes";
+import shopRoute from "./shop.routes";
 
 const appRoutes = Router();
 appRoutes.get("/health-check", (req: Request, res: Response) => {
@@ -12,5 +13,6 @@ appRoutes.get("/health-check", (req: Request, res: Response) => {
 
 appRoutes.use("/users", userRoutes);
 appRoutes.use("/products", productRoutes);
+appRoutes.use("/shops", shopRoute);
 
 export default appRoutes;
