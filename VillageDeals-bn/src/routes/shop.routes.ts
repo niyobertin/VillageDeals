@@ -7,7 +7,7 @@ import {
   updateShopDetails,
 } from "../controllers/shop.controller";
 import { validateSchema } from "../middleware/validator";
-import { registerShopSchema, updateShopSchema } from "../schema/shopschema";
+import { registerShopSchema, updateShopSchema } from "../schema/shopSchema";
 import { isLoggedIn } from "../middleware/login.middleware";
 import {
   isAdminOrManager,
