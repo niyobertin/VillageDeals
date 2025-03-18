@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -12,58 +6,80 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
 model User {
-  id           String     @id @default(uuid())
+  id           String    @id @default(uuid())
   firstName    String
   secondName   String
-  profileImage String?    
-  email        String?    
+  profileImage String?
+  email        String?
   gender       String
   dob          DateTime
   phoneNumber  String
-  role         String     @default("USER")
+  role         String    @default("USER")
   password     String
   companyId    String
   isActive     Boolean
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
   lastLogin    DateTime?
+  shopId       String
+  shop         Shop      @relation(fields: [shopId], references: [id])
 
-  products     Product[]  @relation("UserProducts") 
+  products Product[] @relation("UserProducts")
 
   @@map("users")
 }
 
 model Product {
-  id           String        @id @default(uuid())
-  name         String
-  image        String?
-  description  String?
-  categoryId   String
-  price        Float
-  discount     Float?
-  inStock      Int
-  sold         Int
-  status       Boolean
-  userId       String
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
+  id          String   @id @default(uuid())
+  name        String
+  image       String?
+  description String?
+  categoryId  String
+  price       Float
+  discount    Float?
+  inStock     Int
+  sold        Int
+  status      Boolean
+  userId      String
+  shopId      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
-  user         User          @relation("UserProducts", fields: [userId], references: [id])
-  category     ProductCategory @relation(fields: [categoryId], references: [id]) 
+  user            User              @relation("UserProducts", fields: [userId], references: [id])
+  category        ProductCategory   @relation(fields: [categoryId], references: [id])
+  shop            Shop              @relation(fields: [shopId], references: [id])
+  ProductCategory ProductCategory[] @relation("ProductCategoryProducts")
 
   @@map("products")
-  ProductCategory ProductCategory[] @relation("ProductCategoryProducts")
 }
 
 model ProductCategory {
-  id          String    @id @default(uuid())
-  name        String    @unique
+  id          String   @id @default(uuid())
+  name        String   @unique
   description String?
-  createdAt   DateTime  @default(now())
+  createdAt   DateTime @default(now())
 
-  products    Product[] @relation("ProductCategoryProducts") 
+  products Product[] @relation("ProductCategoryProducts")
+  Product  Product[]
 
   @@map("products_categories")
-  Product Product[]
+}
+
+model Shop {
+  id          String    @id @default(uuid())
+  name        String
+  description String
+  avatar      String?
+  email       String?
+  phone       String
+  address     String?
+  isActive    Boolean
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  users       User[]
+  products    Product[]
+
+  @@map("shops")
 }

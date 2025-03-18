@@ -47,3 +47,16 @@ export interface IProduct {
   user?: IUser;
   category?: IProductCategory;
 }
+
+export interface IShop {
+  id: string;
+  name: string;
+  description: string;
+  avatar?: string;
+  email?: string;
+  phone: string;
+  address?: string;
+  isActive: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}

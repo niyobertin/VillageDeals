@@ -4,7 +4,7 @@ import type { IProduct } from "../../type";
 export const createProducts = async (
   data: IProduct,
   imageFile: string,
-  userId: string,
+  userId: string
 ) => {
   const existingCategory = await prisma.productCategory.findUnique({
     where: { id: data.categoryId },
@@ -62,7 +62,7 @@ export const getSingleProduct = async (id: string): Promise<IProduct> => {
 export const updateProduct = async (
   id: string,
   data: IProduct,
-  imageFile: string,
+  imageFile: string
 ): Promise<IProduct | null> => {
   try {
     const updateProduct = await prisma.product.update({
@@ -92,6 +92,6 @@ export const deleteProduct = async (id: string): Promise<boolean> => {
     });
     return true;
   } catch (error) {
-    throw new Error(`Error occured during deleting ${error.message}`);
+    throw new Error(`Error occurred during deleting ${error.message}`);
   }
 };

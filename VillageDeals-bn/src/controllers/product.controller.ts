@@ -12,7 +12,6 @@ import { uploadImage } from "../utils/cloudinary";
 export const addNewProduct = async (req: Request, res: Response) => {
   const newProduct: IProduct = req.body;
   const productsImage = req.file;
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
   const { id } = req.user;
 
@@ -96,7 +95,7 @@ export const updateProductDetails = async (req: Request, res: Response) => {
       const response = await updateProduct(
         product.id,
         updateProductData,
-        image,
+        image
       );
       if (response) {
         res.status(200).json({
