@@ -4,6 +4,7 @@ import {
   fetchSingleShop,
   registerAShop,
   removeSingleShop,
+  shopApproval,
   updateShopDetails,
 } from "../controllers/shop.controller";
 import { validateSchema } from "../middleware/validator";
@@ -27,4 +28,5 @@ shopRoute.patch(
   updateShopDetails
 );
 shopRoute.delete("/:id", isLoggedIn, isAdminOrManager, removeSingleShop);
+shopRoute.post("/approve/:id", isLoggedIn, isAdminOrManager, shopApproval);
 export default shopRoute;

@@ -1128,6 +1128,73 @@ paths:
           description: Shop not found
         "500":
           description: Internal server error
+  /api/v1/shops/approve/{id}:
+    post:
+      summary: Approve a shop
+      description: This endpoint allows an admin or manager to approve a shop by its ID and send an approval email.
+      operationId: approveShop
+      tags:
+        - Shops
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the shop to be approved.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Shop approval email sent successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Shop approval email sent successfully."
+        "400":
+          description: Invalid request body or missing parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Recipient email and shop ID are required."
+        "401":
+          description: Unauthorized access. User needs to be logged in.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Unauthorized access. Please log in."
+        "403":
+          description: Forbidden. User must be an admin or manager.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Forbidden. Admin or Manager role is required."
+        "500":
+          description: Internal server error. Failed to approve the shop.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Failed to approve shop. Please try again later."
 
 components:
   securitySchemes:

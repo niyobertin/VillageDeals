@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 
 import {
+  approveShop,
   deleteShop,
   getShops,
   getSingleShop,
@@ -100,6 +101,21 @@ export const removeSingleShop = async (req: Request, res: Response) => {
         shop: response,
       });
     }
+  } catch (error) {
+    res.status(500).json({
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+};
+
+export const shopApproval = async (req: Request, res: Response) => {
+  const id = req.params.id;
+  try {
+    await approveShop(id);
+    res.status(200).json({
+      message: "Shop approved successfully",
+    });
   } catch (error) {
     res.status(500).json({
       message: "Internal server error",
