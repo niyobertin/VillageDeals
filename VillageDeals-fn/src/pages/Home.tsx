@@ -1,13 +1,14 @@
 import React from "react";
 import { MainLayout } from "../components/layouts/MainLayout";
 import { HeroSection } from "../components/landing/HeroSection";
+import WorkWithUs from "../components/landing/WorkWithUs";
 
 const Home: React.FC = () => {
   return (
     <MainLayout>
       <div className="">
         <HeroSection />
-        <div className="bg-gray-300"></div>
+        <WorkWithUs />
       </div>
     </MainLayout>
   );

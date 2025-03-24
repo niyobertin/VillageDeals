@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export const HeroSection = () => {
   return (
     <div className="relative h-screen w-full flex items-center justify-center text-white overflow-hidden">
-      <div className="relative text-start px-6 z-10 pl-20 pr-20">
+      <div className="relative text-start px-6 z-10 sm:pl-28 pl-4 sm:pr-28 pr-4">
         <h1 className="sm:text-5xl text-2xl font-bold mb-4">
           Don't Limit Your Business to Paper
         </h1>
