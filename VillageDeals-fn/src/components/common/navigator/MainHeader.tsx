@@ -32,7 +32,7 @@ export const MainHeader: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 555);
+      setIsScrolled(window.scrollY > 50);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -46,7 +46,7 @@ export const MainHeader: React.FC = () => {
       className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 ${
         isScrolled
           ? "bg-green-700 text-white"
-          : "bg-white shadow-md text-green-700"
+          : "bg-transparent shadow-md text-green-600"
       }`}
     >
       <div className="container mx-auto flex justify-between items-center py-4 px-4 md:px-8">
@@ -63,8 +63,8 @@ export const MainHeader: React.FC = () => {
                 to={link.to}
                 className={`hover:underline ${
                   location.pathname === link.to
-                    ? "text-blue-900 font-bold"
-                    : "text-black"
+                    ? "text-green-500 font-bold"
+                    : "text-white"
                 }`}
               >
                 {link.label}
@@ -79,7 +79,7 @@ export const MainHeader: React.FC = () => {
               <>
                 <Link
                   to={dashboardLink.to}
-                  className={`border py-1 px-2 border-blue-900 bg-blue-900 rounded-md  ${
+                  className={`border py-1 px-2 border-green-600 bg-blue-900 rounded-md  ${
                     location.pathname === dashboardLink.to
                       ? "text-white font-bold"
                       : "text-white"
@@ -99,7 +99,7 @@ export const MainHeader: React.FC = () => {
                 <Link
                   key={link.to}
                   to={link.to}
-                  className={`border py-1 px-2 border-blue-900 bg-blue-900 rounded-md ${
+                  className={`border py-1 px-2 border-green-600 bg-green-600 rounded-md ${
                     location.pathname === link.to
                       ? "text-white font-bold"
                       : "text-white"
