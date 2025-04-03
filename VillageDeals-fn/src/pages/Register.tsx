@@ -3,16 +3,21 @@ import { Link } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import logo from "../assets/vdlogo.png";
 import { TextInput } from "../components/common/inputText";
-import { LoginSchema } from "../schemas/authSchema";
+import { RegisterSchema } from "../schemas/authSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 
-interface LoginFormData {
-  emailOrPhone: string;
+interface RegisterFormData {
+  firstName: string;
+  secondName?: string;
+  phoneNumber: string;
+  email?: string;
+  gender: "Male" | "Female";
+  dob: Date;
   password: string;
 }
 
-export const Login: React.FC = () => {
+export const UserRegister: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -22,17 +27,17 @@ export const Login: React.FC = () => {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<LoginFormData>({
-    resolver: yupResolver(LoginSchema),
+  } = useForm<RegisterFormData>({
+    resolver: yupResolver(RegisterSchema),
   });
 
-  const onSubmit = async (data: LoginFormData) => {
+  const onSubmit = async (data: RegisterFormData) => {
     setIsLoading(true);
     setSubmitError(null);
 
     try {
       // Here you would typically make an API call
-      console.log("Login data:", data);
+      console.log("Register data:", data);
 
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -60,22 +65,22 @@ export const Login: React.FC = () => {
         <img src={logo} alt="Village Deals Logo" width="50" height="50" />
         <span className="text-green-700">VillageDeals</span>
       </Link>
-      <div className="flex justify-center sm:pr-[20%] sm:pt-[8%] sm:pb-[2%] sm:pl-[20%] p-[3%] text-white">
-        <div className="sm:block hidden bg-green-700 w-[70%] rounded-l-[4%] shadow-md pt-[10%] pl-[3%] pr-[3%] text-center space-y-4">
+      <div className="flex justify-center sm:pr-[20%] sm:pb-[2%] sm:pl-[20%] text-white">
+        <div className="sm:block hidden bg-green-700 w-[70%] rounded-l-[3%] shadow-md pt-[30%] pl-[3%] pr-[3%] text-center space-y-4">
           <h1 className="text-xl text-center font-bold">
-            Welcome back to VillageDeals! We are happy to have you back.
+            Welcome to VillageDeals! Thank you for choosing us.
           </h1>
-          <p>To keep connected with us, log in with your credentials.</p>
+          <p>Provide your personal details to start journey with us.</p>
           <p>Or</p>
           <div>
             <button className="border-2 py-1 px-4 rounded-[20px]">
-              <Link to={"/sign-in"}>Sign Up</Link>
+              <Link to={"/login"}>Log in</Link>
             </button>
           </div>
         </div>
-        <div className="bg-white sm:rounded-r-[4%] shadow-md sm:w-[70%] w-full text-black p-6">
+        <div className="bg-white sm:rounded-r-[3%] shadow-md sm:w-[70%] w-full text-black p-6">
           <p className="text-xl font-bold mb-4 text-center text-green-700 ">
-            Login to VillageDeals.
+            Create Account.
           </p>
           {submitError && (
             <div className="mb-4 p-2 bg-red-100 text-red-700 rounded">
@@ -84,13 +89,59 @@ export const Login: React.FC = () => {
           )}
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
             <TextInput
-              name="emailOrPhone"
-              label="Email or Phone number"
+              name="firstName"
+              label="First name"
               type="text"
               register={register}
-              error={errors.emailOrPhone?.message}
+              error={errors.firstName?.message}
               disabled={isLoading}
             />
+            <TextInput
+              name="secondName"
+              label="Second name"
+              type="text"
+              register={register}
+              error={errors.secondName?.message}
+              disabled={isLoading}
+            />
+            <TextInput
+              name="phoneNumber"
+              label="Phone name"
+              type="text"
+              register={register}
+              error={errors.phoneNumber?.message}
+              disabled={isLoading}
+            />
+            <TextInput
+              name="email"
+              label="Email"
+              type="email"
+              register={register}
+              error={errors.email?.message}
+              disabled={isLoading}
+            />
+            <label htmlFor="">Gender</label>
+            <select
+              {...register("gender")}
+              disabled={isLoading}
+              className="px-4 py-2 border border-gray-300 rounded-[20px] focus:outline-none focus:ring-2 focus:ring-green-500 w-full"
+            >
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+            {errors.gender && (
+              <p className="text-red-500">{errors.gender.message}</p>
+            )}
+
+            <TextInput
+              name="dob"
+              label="Date of birth"
+              type="date"
+              register={register}
+              error={errors.dob?.message}
+              disabled={isLoading}
+            />
+
             <div className="relative">
               <TextInput
                 name="password"
@@ -109,24 +160,18 @@ export const Login: React.FC = () => {
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
             </div>
-            <Link
-              to={"/reset-password"}
-              className="text-sm text-green-700 hover:underline"
-            >
-              Forgot Password?
-            </Link>
             <button
               type="submit"
               className="w-full bg-green-700 text-white py-2 rounded-[20px] hover:bg-green-600 disabled:bg-green-400"
               disabled={isLoading}
             >
-              {isLoading ? "Logging in..." : "Login"}
+              {isLoading ? "Processing..." : "Sign up"}
             </button>
           </form>
           <div className="py-2">
-            You don't have an account? Register{" "}
+            You have an account? Login{" "}
             <Link
-              to={"/sign-in"}
+              to={"/login"}
               className="text-sm text-green-700 hover:underline"
             >
               Here

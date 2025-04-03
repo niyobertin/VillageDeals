@@ -6,6 +6,7 @@ import { Service } from "../pages/Service";
 import { Login } from "../pages/Login";
 import { RegisterShop } from "../pages/RegisterShop";
 import { Contacts } from "../pages/Contacts";
+import { UserRegister } from "../pages/Register";
 
 const Home = lazy(() => import("../pages/Home"));
 const About = lazy(() => import("../pages/About"));
@@ -28,6 +29,7 @@ const AppRoutes = () => {
         <Route path="/contact" element={<Contacts />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register-shop" element={<RegisterShop />} />
+        <Route path="/sign-in" element={<UserRegister />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
